@@ -121,7 +121,7 @@ class ReviewScreen(BoxLayout):
         subj = self.current_subject()
         if not subj:
             return
-        tree = self.app.db.get_units_tree(subj.id)
+        tree = self.app.db.get_units_tree(subj["id"])
         flat = [u for lst in sorted(tree.values()) for u in lst]
         self.unit.values[:] = ["All"] + [u["name"] for u in flat]
         self.unit.text = "All"
@@ -134,14 +134,14 @@ class ReviewScreen(BoxLayout):
         unit_id = None
         if self.unit.text and self.unit.text != "All":
             u = self.unit_item(self.unit.text)
-            unit_id = u.id if u else None
-        topics = self.app.db.get_topics(subj.id, unit_id)
+            unit_id = u["id"] if u else None
+        topics = self.app.db.get_topics(subj["id"], unit_id)
         self.count.text = f"{len(topics)} topics"
         if not topics:
             self.list.add_widget(Label(text="No topics here yet.", color=GRAY, size_hint_y=None, height=dp(36)))
             return
         for t in topics:
-            st = self.app.db.topic_stats(t.id)
+            st = self.app.db.topic_stats(t["id"])
             color = conf_color(st["last_conf"])
             card = Card(size_hint_y=None, height=dp(64))
             col = BoxLayout(orientation="vertical", size_hint_x=1)
@@ -168,7 +168,7 @@ class ReviewScreen(BoxLayout):
         subj = self.current_subject()
         if not subj:
             return None
-        for lst in sorted(self.app.db.get_units_tree(subj.id).values()):
+        for lst in sorted(self.app.db.get_units_tree(subj["id"]).values()):
             for u in lst:
                 if u["name"] == name:
                     return u
@@ -198,7 +198,7 @@ class ReviewScreen(BoxLayout):
         except ValueError:
             mins = 0
         self.app.db.add_study_session(
-            date.today().isoformat(), mins, notes, [(topic.id, conf_key(conf))])
+            date.today().isoformat(), mins, notes, [(topic["id"], conf_key(conf))])
         pop.dismiss()
         self.load_topics()
         self.app.progress.populate()
