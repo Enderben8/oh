@@ -30,18 +30,20 @@ jobs:
       - name: Build with buildozer
         working-directory: mobile
         run: |
-          buildozer -v android debug 2>&1 | tee buildozer_fail.log
+          buildozer -v android debug 2>&1 | tee buildozer_build.log
           echo "BUILDOZER_EXIT=${PIPESTATUS[0]}"
+          ls -la bin/ 2>/dev/null || echo "NO BIN DIR"
           exit ${PIPESTATUS[0]}
         env:
           JDK_HOME: /usr/lib/jvm/java-17-openjdk-amd64
 
-      - name: Upload buildozer log (on failure)
-        if: failure()
+      - name: Upload buildozer log
+        if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: buildozer-fail-log
-          path: mobile/buildozer_fail.log
+          name: buildozer-log
+          path: mobile/buildozer_build.log
+          if-no-files-found: ignore
 
       - name: Upload APK
         uses: actions/upload-artifact@v4
