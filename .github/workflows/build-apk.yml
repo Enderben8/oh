@@ -3,7 +3,7 @@ name: Build Android APK
 on:
   push:
     branches: [main]
-    paths: ["mobile/**"]
+    paths: ["mobile/**", ".github/workflows/**", "revision_core.py"]
   workflow_dispatch:
 
 jobs:
