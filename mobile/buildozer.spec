@@ -20,6 +20,9 @@ android.archs = arm64-v8a, armeabi-v7a
 android.allow_backup = True
 android.accept_sdk_license = True
 
+# python-for-android branch (develop is required for Python 3.14 / fixes the venv pip bug)
+p4a.branch = develop
+
 # Orientation
 orientation = portrait
 
