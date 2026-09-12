@@ -10,7 +10,7 @@ source.include_patterns = revision_core.py,main.py,buildozer.spec
 version = 1.0.0
 
 # Requirements (pip packages)
-requirements = hostpython3==3.12.8,python3==3.12.8,kivy==2.3.1
+requirements = python3,kivy==2.3.1
 
 # Android specifics
 android.permissions = INTERNET,ACCESS_WIFI_STATE,ACCESS_NETWORK_STATE
