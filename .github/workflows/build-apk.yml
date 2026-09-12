@@ -30,9 +30,18 @@ jobs:
       - name: Build with buildozer
         working-directory: mobile
         run: |
-          buildozer android debug
+          buildozer -v android debug 2>&1 | tee buildozer_fail.log
+          echo "BUILDOZER_EXIT=${PIPESTATUS[0]}"
+          exit ${PIPESTATUS[0]}
         env:
           JDK_HOME: /usr/lib/jvm/java-17-openjdk-amd64
+
+      - name: Upload buildozer log (on failure)
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: buildozer-fail-log
+          path: mobile/buildozer_fail.log
 
       - name: Upload APK
         uses: actions/upload-artifact@v4
