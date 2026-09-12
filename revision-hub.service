@@ -1,0 +1,14 @@
+[Unit]
+Description=GCSE Revision Tracker sync hub
+After=network.target
+
+[Service]
+Type=simple
+WorkingDirectory=/opt/revision-hub
+ExecStart=/usr/bin/python3 /opt/revision-hub/hub.py
+Restart=always
+RestartSec=3
+Environment=PYTHONUNBUFFERED=1
+
+[Install]
+WantedBy=multi-user.target
